@@ -87,6 +87,9 @@ function drawObjectRect(x,y,xDraw,yDraw,direction){
     triangle(baseX, baseY+10, baseX-5, baseY+5, baseX+5, baseY+5);
     break;
     case 3: 
+    var baseX =xDraw-10;
+    var baseY = yDraw+(blockWidth/2)
+    triangle(baseX, baseY-5, baseX, baseY+5, baseX-5, baseY);
     break;
   }
 }
