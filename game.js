@@ -58,26 +58,44 @@ function drawPlayer(){
   fill(color(255,0,0,120)); 
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  rect(posToPlaceTheBlockX,posToPlaceTheBlockY,blockWidth,blockWidth);
+  drawObjectRect(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
 }
 
 function drawTrucs(){
   for(var i=0;i<trucs.length;i++){
     fill(color(255,255,25));
     rect(trucs[i].posX,trucs[i].posY,blockWidth,blockWidth);
-    triangle(x1,y1,x2,y2,x3,y3)
+  }
+}
+
+function drawObjectRect(x,y,xDraw,yDraw,direction){
+  rect(xDraw,yDraw,blockWidth,blockWidth);
+  switch(direction){
+    case 0: 
+      var baseX =xDraw+(blockWidth/3)+10;
+      var baseY = yDraw-(blockWidth/3)
+      triangle(baseX, baseY, baseX-5, baseY+5, baseX+5, baseY+5);
+    break;
+    case 1: 
+    var baseX =xDraw+blockWidth+10;
+    var baseY = yDraw+(blockWidth/2)-5
+    triangle(baseX, baseY, baseX-5, baseY+5, baseX+5, baseY+5);
+    break;
+    case 2: 
+    break;
+    case 3: 
+    break;
   }
 }
 
 function keyPressed() {
+  console.log(keyCode);
+  
   switch (keyCode) {
     case 82:
-      var posX = Math.trunc(mouseX/blockWidth);
-      var posY = Math.trunc(mouseY/blockWidth);
-      //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
-      var posToPlaceTheBlockX = (posX*blockWidth); 
-      var posToPlaceTheBlockY = (posY*blockWidth); 
-      var truc = new Truc(posToPlaceTheBlockX,posToPlaceTheBlockY);
+      console.log("worked");
+      currentDir+=1;
+      if(currentDir>4)currentDir=0;
       break;
   }
 }
