@@ -65,7 +65,7 @@ function drawTrucs(){
   for(var i=0;i<trucs.length;i++){
     fill(color(255,255,25));
     rect(trucs[i].posX,trucs[i].posY,blockWidth,blockWidth);
-    triangle(x1,y1,x2,y2,x3,y3)
+    // triangle(x1,y1,x2,y2,x3,y3)
   }
 }
 
