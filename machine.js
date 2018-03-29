@@ -16,9 +16,9 @@ var Machine = function(posX, posY, rotation, machines) {
     }
 
     this.drawMachineObjects = function(x,y,xDraw,yDraw,direction){
-        fill(color(0,255,0));
+        fill(color(142, 68, 173));
         rect(xDraw,yDraw,blockWidth,blockWidth);
-        fill(color(255,0,0));
+        fill(color(0,0,0));
         switch(direction){
           case 0: 
             var baseX =xDraw+(blockWidth/2);

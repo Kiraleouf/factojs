@@ -50,7 +50,7 @@ function mouseClicked() {
 function drawGrid(){
   for ( var i = 0; i < columns;i++) {
     for ( var j = 0; j < rows;j++) {
-      fill(255); 
+      fill(color(52, 73, 94)); 
       stroke(0);
       rect(i*blockWidth, j*blockWidth,blockWidth, blockWidth);
     }

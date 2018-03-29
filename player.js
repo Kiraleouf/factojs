@@ -2,13 +2,13 @@ var Player = function() {
     this.drawPlayer = function(){
         var posX = Math.trunc(mouseX/blockWidth);
         var posY = Math.trunc(mouseY/blockWidth);
-        fill(color(255,0,0,120)); 
         var posToPlaceTheBlockX = (posX*blockWidth); 
         var posToPlaceTheBlockY = (posY*blockWidth); 
         drawPlayerObjects(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
     }
 
     function drawPlayerObjects(x,y,xDraw,yDraw,direction){
+        fill(color(192, 57, 43,120)); 
         rect(xDraw,yDraw,blockWidth,blockWidth);
         switch(direction){
           case 0: 
