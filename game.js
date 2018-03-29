@@ -33,7 +33,10 @@ function draw() {
 
 function drawMachines(){
   for(var i=0;i<machines.length;i++){
-    machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation)
+    machines[i].createInput(Math.floor(Date.now() / 1000));
+    machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation);
+    machines[i].drawInputs();
+    
   }
 }
 
@@ -43,7 +46,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines);
+  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth);
   if(!machine.present()) machines.push(machine)
 }
 
