@@ -58,7 +58,7 @@ function drawPlayer(){
   fill(color(255,0,0,120)); 
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  drawObjectRect(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
+  drawPlayerObjects(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
 }
 
 function drawTrucs(){
@@ -68,7 +68,7 @@ function drawTrucs(){
   }
 }
 
-function drawObjectRect(x,y,xDraw,yDraw,direction){
+function drawPlayerObjects(x,y,xDraw,yDraw,direction){
   rect(xDraw,yDraw,blockWidth,blockWidth);
   switch(direction){
     case 0: 
