@@ -1,0 +1,36 @@
+var Player = function() {
+    this.drawPlayer = function(){
+        var posX = Math.trunc(mouseX/blockWidth);
+        var posY = Math.trunc(mouseY/blockWidth);
+        fill(color(255,0,0,120)); 
+        var posToPlaceTheBlockX = (posX*blockWidth); 
+        var posToPlaceTheBlockY = (posY*blockWidth); 
+        drawPlayerObjects(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
+    }
+
+    function drawPlayerObjects(x,y,xDraw,yDraw,direction){
+        rect(xDraw,yDraw,blockWidth,blockWidth);
+        switch(direction){
+          case 0: 
+            var baseX =xDraw+(blockWidth/2);
+            var baseY = yDraw-(blockWidth/2)+10
+            triangle(baseX, baseY, baseX-5, baseY+5, baseX+5, baseY+5);
+          break;
+          case 1: 
+            var baseX =xDraw+(blockWidth)+10;
+            var baseY = yDraw+(blockWidth/2)
+            triangle(baseX, baseY-5, baseX, baseY+5, baseX+5, baseY);
+          break;
+          case 2: 
+          var baseX =xDraw+(blockWidth/2);
+          var baseY = yDraw+(blockWidth)+5
+          triangle(baseX, baseY+10, baseX-5, baseY+5, baseX+5, baseY+5);
+          break;
+          case 3: 
+          var baseX =xDraw-10;
+          var baseY = yDraw+(blockWidth/2)
+          triangle(baseX, baseY-5, baseX, baseY+5, baseX-5, baseY);
+          break;
+        }
+      }
+}
