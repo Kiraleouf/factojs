@@ -100,21 +100,21 @@ function drawTrucObjects(x,y,xDraw,yDraw,direction){
   switch(direction){
     case 0: 
       var baseX =xDraw+(blockWidth/2);
-      var baseY = yDraw-(blockWidth/2)+10
+      var baseY = yDraw + 10
       triangle(baseX, baseY, baseX-5, baseY+5, baseX+5, baseY+5);
     break;
     case 1: 
-      var baseX =xDraw+(blockWidth)+10;
+      var baseX =xDraw+(blockWidth)-15;
       var baseY = yDraw+(blockWidth/2)
       triangle(baseX, baseY-5, baseX, baseY+5, baseX+5, baseY);
     break;
     case 2: 
     var baseX =xDraw+(blockWidth/2);
-    var baseY = yDraw+(blockWidth)+5
+    var baseY = yDraw+blockWidth -20
     triangle(baseX, baseY+10, baseX-5, baseY+5, baseX+5, baseY+5);
     break;
     case 3: 
-    var baseX =xDraw-10;
+    var baseX =xDraw+15;
     var baseY = yDraw+(blockWidth/2)
     triangle(baseX, baseY-5, baseX, baseY+5, baseX-5, baseY);
     break;
