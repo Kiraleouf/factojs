@@ -34,7 +34,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var truc = new Truc(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir);
+  var truc = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,trucs);
   if(!truc.present()){
     trucs.push(truc)
     console.log("pushed");
@@ -137,20 +137,20 @@ function keyPressed() {
 
 //=========================================================
 
-var Truc = function(posX,posY,rotation) {
-  this.name = "MAINTRUC";
-  this.posX = posX ;
-  this.posY = posY ;
-  this.numBlockX = posX/blockWidth ;
-  this.numBlockY = posY/blockWidth ;
-  this.rotation = rotation;
+// var Truc = function(posX,posY,rotation) {
+//   this.name = "MAINTRUC";
+//   this.posX = posX ;
+//   this.posY = posY ;
+//   this.numBlockX = posX/blockWidth ;
+//   this.numBlockY = posY/blockWidth ;
+//   this.rotation = rotation;
 
-  this.present = function(x,y){
-    for(var i=0;i<trucs.length;i++){
-      if(trucs[i].posX == this.posX && trucs[i].posY == this.posY){
-        return true;
-      }
-    }
-    return false;
-  }
-}
+//   this.present = function(x,y){
+//     for(var i=0;i<trucs.length;i++){
+//       if(trucs[i].posX == this.posX && trucs[i].posY == this.posY){
+//         return true;
+//       }
+//     }
+//     return false;
+//   }
+// }
