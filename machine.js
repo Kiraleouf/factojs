@@ -1,13 +1,15 @@
-var Machine = function(posX, posY, rotation, machines, blockWidth) {
+var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth) {
 
     this.posX = posX;
     this.posY = posY;
+    this.itemWidth = 10;
     this.rotation = rotation;
     this.numBlockX = posX/blockWidth;  
     this.numBlockY = posY/blockWidth;
-    this.timestamp = Math.floor(Date.now() / 1000);
     this.items = [];
     this.blockWidth = blockWidth;
+    var lastInput = Date.now();
+    var delay = delay;
 
     this.present = function(x,y){
         for(var i=0;i<machines.length;i++){
@@ -19,6 +21,7 @@ var Machine = function(posX, posY, rotation, machines, blockWidth) {
     }
 
     this.drawMachineObjects = function(x,y,xDraw,yDraw,direction){
+        stroke(0);
         fill(color(142, 68, 173));
         rect(xDraw,yDraw,this.blockWidth,this.blockWidth);
         fill(color(0,0,0));
@@ -44,26 +47,32 @@ var Machine = function(posX, posY, rotation, machines, blockWidth) {
           triangle(baseX, baseY-5, baseX, baseY+5, baseX-5, baseY);
           break;
         }
+        if(lastInput == 0 || Date.now() - lastInput > delay){
+            lastInput = Date.now();
+            this.createInput();
+        }
       }
 
-    this.createInput = function(ts){
-        if(ts - 3 > this.timestamp){
-            switch(this.rotation){
-                case 0:
-                    this.items.push(new Item(this.posX + this.blockWidth, this.posY + this.blockWidth));
-                break;
-                case 1:
-                    this.items.push(new Item(this.posX, this.posY + this.blockWidth));
-                break;
-                case 2:
-                    this.items.push(new Item(this.posX, this.posY - this.blockWidth));
-                break;
-                case 3:
-                    this.items.push(new Item(this.posX - this.blockWidth, this.posY - this.blockWidth));
-                break
-            }
-            this.timestamp = ts;
+    this.createInput = function(){
+        blocCountX = this.posX/this.blockWidth;
+        blocCountY = this.posY/this.blockWidth;
+        switch(this.rotation){
+            case 0:
+                blocCountY--;
+            break;
+            case 1:
+                blocCountX++;
+            break;
+            case 2:
+                blocCountY++;
+            break;
+            case 3:
+                blocCountX--;
+            break
         }
+        var rX = random(blockWidth-this.itemWidth);
+        var rY = random(blockWidth-this.itemWidth);
+        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY));
     }
 
     this.drawInputs = function(){

@@ -9,6 +9,9 @@ var blockWidth = 50;
 var rows;
 var currentDir = 0;
 var player = new Player();
+var items = new Array();
+
+var money = 0;
 
 var machines = new Array();
 
@@ -21,22 +24,36 @@ function setup() {
   columns = floor(width/blockWidth);
   rows = floor(height/blockWidth);
   frameRate(60)
-
 }
 
 function draw() {
   drawGrid();
   player.drawPlayer();
   drawMachines();
+  getItems();
+  drawScore();
+  drawGUI();
 }
 
+function drawGUI(){
+  var col = color(223, 249, 251);
+  var button = createButton('ADD ROBOT');
+  button.style('background-color', col);
+  button.position(width- 200, 100);
+  button.mousePressed(addRobot);
+}
+
+function getItems(){
+  items = new Array();
+  for(var i =0;i< machines.length;i++){
+    items = items.concat(machines[i].items)
+  }
+}
 
 function drawMachines(){
   for(var i=0;i<machines.length;i++){
-    machines[i].createInput(Math.floor(Date.now() / 1000));
     machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation);
     machines[i].drawInputs();
-    
   }
 }
 
@@ -46,8 +63,13 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth);
+  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10);
   if(!machine.present()) machines.push(machine)
+}
+
+function addRobot(){
+  console.log("add a robot");
+  
 }
 
 function drawGrid(){
@@ -58,6 +80,13 @@ function drawGrid(){
       rect(i*blockWidth, j*blockWidth,blockWidth, blockWidth);
     }
   }
+}
+
+function drawScore(){
+  fill(255, 255, 255);
+  stroke(0)
+  text('MONEY :'+ money, (width /2)-50 , 60);
+  text('GOLDS FOUND :'+ this.items.length, (width /2)-50 , 80);
 }
 
 function keyPressed() {
