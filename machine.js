@@ -1,4 +1,4 @@
-var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems, globalItemsList) {
+var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems, globalItemsList, itemAnim) {
 
     this.id = id;
     this.posX = posX;
@@ -12,6 +12,7 @@ var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,inte
     var lastInput = Date.now();
     var delay = delay;
     var maxItems = maxItems;
+    var itemAnim = itemAnim;
 
     this.present = function(x,y){
         for(var i=0;i<machines.length;i++){
@@ -75,7 +76,7 @@ var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,inte
             }
             var rX = random(blockWidth-this.itemWidth);
             var rY = random(blockWidth-this.itemWidth);
-            this.items.push(new Item(this.randomUUID(),(blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20),"baseGreenItem");
+            this.items.push(new Item(this.randomUUID(),(blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20),"baseGreenItem",itemAnim);
         }
     }
 

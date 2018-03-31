@@ -26,6 +26,7 @@ window.onload = function(){
 
 function preload() {
   chestImg = loadImage('res/chest.png');
+  itemAnim = loadImage('res/coins.png');
 }
 
 function setup() {
@@ -103,7 +104,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10);
+  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10,itemAnim);
   if(!machine.present()) machines.push(machine)
 }
 
