@@ -9,11 +9,13 @@ var blockWidth = 50;
 var rows;
 var currentDir = 0;
 var player = new Player();
+
 var items = new Array();
+var robots = new Array();
+var machines = new Array();
 
 var money = 0;
 
-var machines = new Array();
 
 window.onload = function(){
     setup();
@@ -31,6 +33,7 @@ function draw() {
   player.drawPlayer();
   drawMachines();
   getItems();
+  getRobots()
   drawScore();
   drawGUI();
 }
@@ -47,6 +50,12 @@ function getItems(){
   items = new Array();
   for(var i =0;i< machines.length;i++){
     items = items.concat(machines[i].items)
+  }
+}
+function getRobots(){
+  for(var i =0;i< robots.length;i++){
+    robots[i].items = items
+    robots[i].draw()
   }
 }
 
@@ -68,8 +77,7 @@ function mouseClicked() {
 }
 
 function addRobot(){
-  console.log("add a robot");
-  
+  console.log("buy a robot");
 }
 
 function drawGrid(){
@@ -87,16 +95,27 @@ function drawScore(){
   stroke(0)
   text('MONEY :'+ money, (width /2)-50 , 60);
   text('GOLDS FOUND :'+ this.items.length, (width /2)-50 , 80);
+  text('ROBOTS COUNT :'+ this.robots.length, (width /2)-50 , 100);
 }
 
 function keyPressed() {
-  console.log(keyCode);
-  
   switch (keyCode) {
     case 82:
-      console.log("worked");
       currentDir+=1;
       if(currentDir>3)currentDir=0;
       break;
+    case 69:
+      spawnRobot()
+      break;
   }
+}
+
+function spawnRobot(){
+  var posX = Math.trunc(mouseX/blockWidth);
+  var posY = Math.trunc(mouseY/blockWidth);
+  //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
+  var posToPlaceTheBlockX = (posX*blockWidth); 
+  var posToPlaceTheBlockY = (posY*blockWidth); 
+  var robot = new Robot(posToPlaceTheBlockX,posToPlaceTheBlockY,20,this.blockWidth);
+  robots.push(robot)
 }
