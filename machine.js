@@ -76,7 +76,7 @@ var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,inte
             }
             var rX = random(blockWidth-this.itemWidth);
             var rY = random(blockWidth-this.itemWidth);
-            this.items.push(new Item(this.randomUUID(),(blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20),"baseGreenItem",itemAnim);
+            this.items.push(new Item(this.randomUUID(),(blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20,"baseGreenItem",itemAnim));
         }
     }
 
