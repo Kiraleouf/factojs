@@ -9,6 +9,7 @@ var blockWidth = 50;
 var rows;
 var currentDir = 0;
 var player = new Player();
+var chest = new Chest(1,1,30,blockWidth);
 
 var items = new Array();
 var robots = new Array();
@@ -26,19 +27,7 @@ function setup() {
   columns = floor(width/blockWidth);
   rows = floor(height/blockWidth);
   frameRate(60)
-}
 
-function draw() {
-  drawGrid();
-  player.drawPlayer();
-  drawMachines();
-  getItems();
-  getRobots()
-  drawScore();
-  drawGUI();
-}
-
-function drawGUI(){
   var col = color(223, 249, 251);
   var button = createButton('ADD ROBOT');
   button.style('background-color', col);
@@ -46,10 +35,30 @@ function drawGUI(){
   button.mousePressed(addRobot);
 }
 
+function draw() {
+  drawGrid();
+  drawChest();
+  drawMachines();
+  getItems();
+  getRobots()
+  player.drawPlayer();
+  drawScore();
+}
+
+function drawChest(){
+  chest.draw();
+}
+
+
 function getItems(){
   items = new Array();
   for(var i =0;i< machines.length;i++){
     items = items.concat(machines[i].items)
+  }
+  for(j=0;j<items.length;j++){
+    if(items[j].over){
+      //TODO remove item
+    }
   }
 }
 function getRobots(){
@@ -93,8 +102,7 @@ function drawGrid(){
 function drawScore(){
   fill(255, 255, 255);
   stroke(0)
-  text('MONEY :'+ money, (width /2)-50 , 60);
-  text('GOLDS FOUND :'+ this.items.length, (width /2)-50 , 80);
+  text('MONEY :'+ chest.gold, (width /2)-50 , 60);
   text('ROBOTS COUNT :'+ this.robots.length, (width /2)-50 , 100);
 }
 
@@ -116,6 +124,6 @@ function spawnRobot(){
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var robot = new Robot(posToPlaceTheBlockX,posToPlaceTheBlockY,20,this.blockWidth);
+  var robot = new Robot(posToPlaceTheBlockX,posToPlaceTheBlockY,20,this.blockWidth,chest);
   robots.push(robot)
 }

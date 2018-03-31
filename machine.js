@@ -77,7 +77,7 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
 
     this.drawInputs = function(){
         for(var i = 0; i < this.items.length; i++){
-            this.items[i].draw(this.blockWidth / 4);
+            this.items[i].draw();
         }    
     }
 }
