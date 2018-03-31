@@ -103,7 +103,13 @@ function drawScore(){
   fill(255, 255, 255);
   stroke(0)
   text('MONEY :'+ this.chest.golds, (width /2)-50 , 60);
-  text('ROBOTS COUNT :'+ this.robots.length, (width /2)-50 , 100);
+  var count=0;
+  for(var i=0;i< this.robots.length;i++){
+    if(this.robots[i].isActive()){
+      count++;
+    }
+  }
+  text('ROBOTS ACTIVITY:'+ count +"/"+this.robots.length, (width /2)-50 , 100);
 }
 
 function keyPressed() {

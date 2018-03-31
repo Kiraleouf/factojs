@@ -27,6 +27,10 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
         }
     }
 
+    this.isActive = function(){
+        return active;
+    }
+
     this.findTarget = function(){
         for(var i=0;i<this.items.length;i++){
             if(!this.items[i].isBusy){
