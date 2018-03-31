@@ -1,14 +1,19 @@
-var Item = function(posX, posY) {
-    this.positionX = posX;
-    this.positionY = posY;
+var Item = function(posX, posY,itemSize,itemValue) {
+    this.posX = posX;
+    this.posY = posY;
+    this.isBusy = false;
+    this.color = color(249, 202, 36);
+    this.size = itemSize;
+    this.value = itemValue;
+
 
     this.itemPop = function(){
         console.log("POPPED");
     }
 
-    this.draw = function(size){
+    this.draw = function(){
         stroke(255);
-        fill(color(249, 202, 36))
-        rect(this.positionX, this.positionY, size, size);
+        fill(this.color)
+        rect(this.posX, this.posY, this.size, this.size);
     }
 };

@@ -1,4 +1,4 @@
-var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth) {
+var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems) {
 
     this.posX = posX;
     this.posY = posY;
@@ -8,8 +8,9 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
     this.numBlockY = posY/blockWidth;
     this.items = [];
     this.blockWidth = blockWidth;
-    var lastInput = Date.now();
+    var lastInput = 0;
     var delay = delay;
+    var maxItems = maxItems;
 
     this.present = function(x,y){
         for(var i=0;i<machines.length;i++){
@@ -72,12 +73,12 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
         }
         var rX = random(blockWidth-this.itemWidth);
         var rY = random(blockWidth-this.itemWidth);
-        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY));
+        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20,10));
     }
 
     this.drawInputs = function(){
         for(var i = 0; i < this.items.length; i++){
-            this.items[i].draw(this.blockWidth / 4);
+            this.items[i].draw();
         }    
     }
 }
