@@ -1,5 +1,5 @@
 
-var Item = function(id, posX, posY,itemSize,type,image) {
+var Item = function(id, posX, posY,itemSize,type,imageItem) {
     //this.type 
     this.id = id;
     this.posX = posX;
@@ -7,7 +7,7 @@ var Item = function(id, posX, posY,itemSize,type,image) {
     this.isBusy = false;
     this.color;
     this.size = itemSize;
-    this.img = image;
+    var img = imageItem;
 
 
     this.itemPop = function(){
@@ -21,9 +21,9 @@ var Item = function(id, posX, posY,itemSize,type,image) {
         fill(this.color)
         rect(this.posX, this.posY, this.size, this.size);
         */
-       dWidth = this.img.width/7;
-       dHeight = this.img.height /5;
-       image(this.img,0,0);
+       dWidth = img.width/7;
+       dHeight = img.height /5;
+       image(img,this.posX, this.posY,[sWidth=this.size],[sHeight=this.size],[dx=0],[dy=0],[dWidth],[dHeight])
     }
 
     this.loadItemType = function(type){
