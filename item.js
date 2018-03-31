@@ -1,9 +1,10 @@
-var Item = function(posX, posY,itemSize) {
+var Item = function(posX, posY,itemSize,itemValue) {
     this.posX = posX;
     this.posY = posY;
     this.isBusy = false;
     this.color = color(249, 202, 36);
     this.size = itemSize;
+    this.value = itemValue;
 
 
     this.itemPop = function(){

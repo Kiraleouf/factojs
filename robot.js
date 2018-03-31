@@ -13,6 +13,7 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
     var items = new Array();
     var speed = 10;
     var chest = mainChest;
+    var baseUnitCost = 50;
 
     this.draw = function(){
         if(active) {
@@ -118,7 +119,7 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
         if(posY == chest.posY+(chest.size/2) && posX == chest.posX+(chest.size/2)){
             active =false;
             searchChest = false;
-            chest.golds ++;
+            chest.golds += target.value;
             target = null;
         }
     }
