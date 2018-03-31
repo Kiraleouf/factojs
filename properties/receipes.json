@@ -5,11 +5,11 @@
         "time":"5000",
         "itemsNeeded":[
             {
-                "itemA":{
+                "baseGreenItem":{
                     "type":"baseGreenItem",
                     "amount":"3"
                 },
-                "itemB":{
+                "baseRedItem":{
                     "type":"baseRedItem",
                     "amount":"2"
                 }
