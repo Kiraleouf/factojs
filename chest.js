@@ -3,7 +3,7 @@ var Chest = function(posX, posY,itemSize, parentBlockWidth) {
     this.posY = posY*parentBlockWidth;
     this.size = itemSize;
     this.blockWidth = parentBlockWidth;
-    this.golds =0;
+    var golds = 0;
 
     this.draw = function(){
         stroke(color(240, 147, 43))

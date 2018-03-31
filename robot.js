@@ -11,7 +11,7 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
     var active = false;
     var searchChest = false;
     var items = new Array();
-    var speed = 3;
+    var speed = 10;
     var chest = mainChest;
 
     this.draw = function(){
@@ -114,7 +114,7 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
         if(posY == chest.posY+(chest.size/2) && posX == chest.posX+(chest.size/2)){
             active =false;
             searchChest = false;
-            chest.gold ++;
+            chest.golds ++;
             target = null;
         }
     }
