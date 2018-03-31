@@ -1,4 +1,4 @@
-var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth) {
+var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems) {
 
     this.posX = posX;
     this.posY = posY;
@@ -10,6 +10,7 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
     this.blockWidth = blockWidth;
     var lastInput = Date.now();
     var delay = delay;
+    var maxItems = maxItems;
 
     this.present = function(x,y){
         for(var i=0;i<machines.length;i++){
@@ -54,25 +55,27 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
       }
 
     this.createInput = function(){
-        blocCountX = this.posX/this.blockWidth;
-        blocCountY = this.posY/this.blockWidth;
-        switch(this.rotation){
-            case 0:
-                blocCountY--;
-            break;
-            case 1:
-                blocCountX++;
-            break;
-            case 2:
-                blocCountY++;
-            break;
-            case 3:
-                blocCountX--;
-            break
+        if(items.length < maxItems){
+            blocCountX = this.posX/this.blockWidth;
+            blocCountY = this.posY/this.blockWidth;
+            switch(this.rotation){
+                case 0:
+                    blocCountY--;
+                break;
+                case 1:
+                    blocCountX++;
+                break;
+                case 2:
+                    blocCountY++;
+                break;
+                case 3:
+                    blocCountX--;
+                break
+            }
+            var rX = random(blockWidth-this.itemWidth);
+            var rY = random(blockWidth-this.itemWidth);
+            this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20));
         }
-        var rX = random(blockWidth-this.itemWidth);
-        var rY = random(blockWidth-this.itemWidth);
-        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20));
     }
 
     this.drawInputs = function(){

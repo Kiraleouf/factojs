@@ -81,7 +81,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,3000,10);
+  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10);
   if(!machine.present()) machines.push(machine)
 }
 
@@ -102,7 +102,7 @@ function drawGrid(){
 function drawScore(){
   fill(255, 255, 255);
   stroke(0)
-  text('MONEY :'+ chest.gold, (width /2)-50 , 60);
+  text('MONEY :'+ chest.golds, (width /2)-50 , 60);
   text('ROBOTS COUNT :'+ this.robots.length, (width /2)-50 , 100);
 }
 

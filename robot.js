@@ -28,7 +28,6 @@ var Robot = function(roboportPosX,roboportPosY,width, blockSize,mainChest) {
     }
 
     this.findTarget = function(){
-        console.log(this.items.length);
         for(var i=0;i<this.items.length;i++){
             if(!this.items[i].isBusy){
                 target = this.items[i];
