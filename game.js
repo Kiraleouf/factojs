@@ -9,13 +9,14 @@ var blockWidth = 50;
 var rows;
 var currentDir = 0;
 var player = new Player();
-var chest = new Chest(1,1,30,blockWidth);
+var chest ;
 
 var items = new Array();
 var robots = new Array();
 var machines = new Array();
 var crafters = new Array();
 
+var chestImg;
 var money = 0;
 
 
@@ -23,11 +24,17 @@ window.onload = function(){
     setup();
 }
 
+function preload() {
+  chestImg = loadImage('res/chest.png');
+}
+
 function setup() {
   createCanvas(1920, 1080);
   columns = floor(width/blockWidth);
   rows = floor(height/blockWidth);
   frameRate(60)
+
+  chest = new Chest(1,1,50,blockWidth,chestImg);
 
   var col = color(223, 249, 251);
   var button = createButton('ADD ROBOT');
