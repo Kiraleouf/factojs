@@ -14,6 +14,7 @@ var chest = new Chest(1,1,30,blockWidth);
 var items = new Array();
 var robots = new Array();
 var machines = new Array();
+var crafters = new Array();
 
 var money = 0;
 
@@ -39,6 +40,8 @@ function draw() {
   drawGrid();
   drawChest();
   drawMachines();
+  drawCrafters();
+  drawItems();
   getItems();
   getRobots()
   player.drawPlayer();
@@ -52,15 +55,16 @@ function drawChest(){
 
 function getItems(){
   items = new Array();
+  
   for(var i =0;i< machines.length;i++){
     items = items.concat(machines[i].items)
   }
-  for(j=0;j<items.length;j++){
-    if(items[j].over){
-      //TODO remove item
-    }
+
+  for(var i = 0; i < crafters.length; i++){
+    items = items.concat(crafters[i].itemsGlobalList)
   }
 }
+
 function getRobots(){
   for(var i =0;i< robots.length;i++){
     robots[i].items = items
@@ -71,7 +75,18 @@ function getRobots(){
 function drawMachines(){
   for(var i=0;i<machines.length;i++){
     machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation);
-    machines[i].drawInputs();
+  }
+}
+
+function drawCrafters(){
+  for(var i = 0; i < crafters.length; i++){
+    crafters[i].draw();
+  }
+}
+
+function drawItems(){
+  for(var i = 0; i < items.length; i++){
+    items[i].draw();
   }
 }
 
@@ -81,7 +96,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10);
+  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10);
   if(!machine.present()) machines.push(machine)
 }
 
@@ -126,4 +141,11 @@ function spawnRobot(){
   var posToPlaceTheBlockY = (posY*blockWidth); 
   var robot = new Robot(posToPlaceTheBlockX,posToPlaceTheBlockY,20,this.blockWidth,chest);
   robots.push(robot)
+}
+
+function randomUUID(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }

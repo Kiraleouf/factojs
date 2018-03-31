@@ -1,0 +1,17 @@
+{
+    "baseGreenItem":{
+        "colorR":"50",
+        "colorG":"250",
+        "colorB":"50"
+    },
+    "baseRedItem":{
+        "colorR":"250",
+        "colorG":"50",
+        "colorB":"50"
+    },
+    "blueItem":{
+        "colorR":"50",
+        "colorG":"50",
+        "colorB":"250"
+    }
+}

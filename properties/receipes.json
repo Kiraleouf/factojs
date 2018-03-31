@@ -1,0 +1,19 @@
+{
+    "blueItem":{
+        "name":"blueItem",
+        "amountProduced":"1",
+        "time":"5000",
+        "itemsNeeded":[
+            {
+                "itemA":{
+                    "type":"baseGreenItem",
+                    "amount":"3"
+                },
+                "itemB":{
+                    "type":"baseRedItem",
+                    "amount":"2"
+                }
+            }
+        ]
+    }
+}

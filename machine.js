@@ -1,12 +1,13 @@
-var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems) {
+var Machine = function(id, posX, posY, rotation, machines, blockWidth,delay,intemWidth,maxItems, globalItemsList) {
 
+    this.id = id;
     this.posX = posX;
     this.posY = posY;
     this.itemWidth = 10;
     this.rotation = rotation;
     this.numBlockX = posX/blockWidth;  
     this.numBlockY = posY/blockWidth;
-    this.items = [];
+    this.items = globalItemsList;
     this.blockWidth = blockWidth;
     var lastInput = Date.now();
     var delay = delay;
@@ -74,13 +75,14 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
             }
             var rX = random(blockWidth-this.itemWidth);
             var rY = random(blockWidth-this.itemWidth);
-            this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20));
+            this.items.push(new Item(this.randomUUID(),(blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20),"baseGreenItem");
         }
     }
 
-    this.drawInputs = function(){
-        for(var i = 0; i < this.items.length; i++){
-            this.items[i].draw();
-        }    
+    this.randomUUID = function(){
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
     }
 }
