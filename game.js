@@ -96,7 +96,7 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10);
+  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10,this.items);
   if(!machine.present()) machines.push(machine)
 }
 

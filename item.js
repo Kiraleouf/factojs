@@ -1,5 +1,5 @@
 var Item = function(id, posX, posY,itemSize,type) {
-    this.type = loadItemType(type);
+    this.type = this.loadItemType(type);
     this.id = id;
     this.posX = posX;
     this.posY = posY;
