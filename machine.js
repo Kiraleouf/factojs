@@ -72,7 +72,7 @@ var Machine = function(posX, posY, rotation, machines, blockWidth,delay,intemWid
         }
         var rX = random(blockWidth-this.itemWidth);
         var rY = random(blockWidth-this.itemWidth);
-        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY));
+        this.items.push(new Item((blocCountX*blockWidth)+rX, (blocCountY*blockWidth)+rY,20));
     }
 
     this.drawInputs = function(){
