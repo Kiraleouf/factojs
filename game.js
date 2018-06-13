@@ -48,7 +48,7 @@ function draw() {
     lastSpawnTime = new Date().getTime();
   }
 
-  if(new Date().getTime() - lastHealSpawnTime > timeToSpawnHealMs && heals.length < 20){
+  if(new Date().getTime() - lastHealSpawnTime > timeToSpawnHealMs && heals.length < 3){
     heal = new Heal();
     heal.init()
     heal.id = randomUUID();
