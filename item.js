@@ -29,7 +29,8 @@ class Item {
         this.posX=random(width)
         this.posY=random(height)
         this.randomStats(500)
-        this.level = 1;
+        this.level = Math.round(random(10));
+        this.randomStats(500+(100*this.level))
     };
 
     levelUp(){

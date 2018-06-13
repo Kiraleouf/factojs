@@ -41,13 +41,13 @@ function draw() {
   background(0,0,0)
   //CRON TO SPAWN MONSTERS
   
-  /*if(new Date().getTime() - lastSpawnTime > timeToSpawnMs && items.length < 20){
+  if(new Date().getTime() - lastSpawnTime > timeToSpawnMs && items.length < 20){
     item = new Item();
     item.init()
     item.id = randomUUID();
     items.push(item);
     lastSpawnTime = new Date().getTime();
-  }*/
+  }
 
   if(new Date().getTime() - lastHealSpawnTime > timeToSpawnHealMs && heals.length < 20){
     heal = new Heal();
