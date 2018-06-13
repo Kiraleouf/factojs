@@ -165,7 +165,7 @@ class Item {
                 this.lastHitTime = new Date().getTime()
             }else{
                 this.target.currentLife = 0;
-                this.addXp(this.target.level * 50);
+                this.addXp(this.target.level * 10);
                 this.target = undefined
             }
         }
