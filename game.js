@@ -2,9 +2,10 @@ var items = new Array();
 var heals = new Array();
 
 var mobAtSpawn = 15;
+var mobOnWave = 5;
 
 //Temps de spawn des monstres en ms
-var timeToSpawnMs = 500;
+var timeToSpawnMs = 5000;
 //Temps de spawn des heals en ms
 var timeToSpawnHealMs = 2000;
 var lastHealSpawnTime = new Date().getTime();
@@ -29,8 +30,7 @@ function setup() {
   createHealArea()
   
   for(var i =0 ; i < mobAtSpawn ; i++){
-    //createItem();
-    createHeals();
+    createItem();
   }
 }
 
@@ -40,12 +40,11 @@ function draw() {
   }
   background(0,0,0)
   //CRON TO SPAWN MONSTERS
-  
+
   if(new Date().getTime() - lastSpawnTime > timeToSpawnMs && items.length < 20){
-    item = new Item();
-    item.init()
-    item.id = randomUUID();
-    items.push(item);
+    for(var i =0 ; i < mobOnWave ; i++){
+      createItem();
+    }
     lastSpawnTime = new Date().getTime();
   }
 
