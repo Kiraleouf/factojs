@@ -1,154 +1,82 @@
-var direction = 'right';
-
-var xStart = 0; //starting x coordinate for snake
-var yStart = 250; //starting y coordinate for snake
-
-
-var columns;
-var blockWidth = 50;
-var rows;
-var currentDir = 0;
-var player = new Player();
-var chest ;
-
 var items = new Array();
-var robots = new Array();
-var machines = new Array();
-var crafters = new Array();
-
-var chestImg;
-var money = 0;
-
+var timeToSpawnMs = 200;
+var lastSpawnTime = new Date().getTime();
 
 window.onload = function(){
     setup();
 }
 
 function preload() {
-  chestImg = loadImage('res/chest.png');
-  itemAnim = loadImage('res/coins.png');
 }
 
 function setup() {
-  createCanvas(1920, 1080);
-  columns = floor(width/blockWidth);
-  rows = floor(height/blockWidth);
+  createCanvas(800, 600);
+  columns = floor(width/50);
+  rows = floor(height/50);
+  rectMode(CENTER);
   frameRate(60)
-
-  chest = new Chest(1,1,50,blockWidth,chestImg);
-
   var col = color(223, 249, 251);
-  var button = createButton('ADD ROBOT');
-  button.style('background-color', col);
-  button.position(width- 200, 100);
-  button.mousePressed(addRobot);
+  
+  for(var i =0 ; i < 100 ; i++){
+   item = new Item();
+   item.init()
+   item.id = randomUUID();
+   items.push(item);
+  }
 }
 
 function draw() {
-  drawGrid();
-  drawChest();
-  drawMachines();
-  drawCrafters();
-  drawItems();
-  getItems();
-  getRobots()
-  player.drawPlayer();
-  drawScore();
-}
-
-function drawChest(){
-  chest.draw();
-}
-
-
-function getItems(){
-  items = new Array();
-  
-  for(var i =0;i< machines.length;i++){
-    items = items.concat(machines[i].items)
+  background(0,0,0)
+  //CRON TO SPAWN MONSTERS
+  /*
+  if(new Date().getTime() - lastSpawnTime > timeToSpawnMs && items.length < 20){
+    item = new Item();
+    item.init()
+    item.id = randomUUID();
+    items.push(item);
+    lastSpawnTime = new Date().getTime();
   }
+  */
 
-  for(var i = 0; i < crafters.length; i++){
-    items = items.concat(crafters[i].itemsGlobalList)
-  }
-}
-
-function getRobots(){
-  for(var i =0;i< robots.length;i++){
-    robots[i].items = items
-    robots[i].draw()
-  }
-}
-
-function drawMachines(){
-  for(var i=0;i<machines.length;i++){
-    machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation);
-  }
-}
-
-function drawCrafters(){
-  for(var i = 0; i < crafters.length; i++){
-    crafters[i].draw();
-  }
-}
-
-function drawItems(){
-  for(var i = 0; i < items.length; i++){
-    items[i].draw();
-  }
-}
-
-function mouseClicked() {
-  var posX = Math.trunc(mouseX/blockWidth);
-  var posY = Math.trunc(mouseY/blockWidth);
-  //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
-  var posToPlaceTheBlockX = (posX*blockWidth); 
-  var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(this.randomUUID(),posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,1000,10,10,this.items,itemAnim);
-  if(!machine.present()) machines.push(machine)
-}
-
-function addRobot(){
-  console.log("buy a robot");
-}
-
-function drawGrid(){
-  for ( var i = 0; i < columns;i++) {
-    for ( var j = 0; j < rows;j++) {
-      fill(color(52, 73, 94)); 
-      stroke(0);
-      rect(i*blockWidth, j*blockWidth,blockWidth, blockWidth);
+  //CLEAR List
+  items.forEach(function(item) {
+    if(item.currentLife <= 0){
+      var i = items.indexOf(item);
+      if(i != -1) {
+        console.log("Remove dead item");
+        items.splice(i, 1);
+      }
     }
+  })
+
+  //MOVE MONSTERS 
+  if(items.length > 1){
+    items.forEach(function(item) {
+      if(item.target == undefined || item.target.currentLife==0){
+        item.target = items[Math.floor(random(items.length))]
+        while(item.target.id == item.id){
+          console.log("can't focus myself search other target");
+          item.target = items[Math.floor(random(items.length))]
+        }
+      }
+      item.moveToTarget();
+    })
   }
+
+  //DRAW MONSTERS
+  items.forEach(function(item) {
+    item.draw()
+  })
+
+  //DRAW LINK
+  items.forEach(function(item) {
+    item.draw()
+    item.drawLinkTarget()
+  })
 }
 
-function drawScore(){
-  fill(255, 255, 255);
-  stroke(0)
-  text('MONEY :'+ chest.golds, (width /2)-50 , 60);
-  text('ROBOTS COUNT :'+ this.robots.length, (width /2)-50 , 100);
-}
-
-function keyPressed() {
-  switch (keyCode) {
-    case 82:
-      currentDir+=1;
-      if(currentDir>3)currentDir=0;
-      break;
-    case 69:
-      spawnRobot()
-      break;
-  }
-}
-
-function spawnRobot(){
-  var posX = Math.trunc(mouseX/blockWidth);
-  var posY = Math.trunc(mouseY/blockWidth);
-  //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
-  var posToPlaceTheBlockX = (posX*blockWidth); 
-  var posToPlaceTheBlockY = (posY*blockWidth); 
-  var robot = new Robot(posToPlaceTheBlockX,posToPlaceTheBlockY,20,this.blockWidth,chest);
-  robots.push(robot)
+function findRandomTarget(){
+  return items[random(items.length)]
 }
 
 function randomUUID(){
@@ -156,4 +84,4 @@ function randomUUID(){
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
-}
+};

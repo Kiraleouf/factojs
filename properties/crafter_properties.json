@@ -1,9 +1,0 @@
-{
-    "basic":{
-        "craftSpeed": "1000",
-        "maxHandleItem": "4",
-        "colorR":"135",
-        "colorG":"235",
-        "colorB":"245"
-    }
-}
