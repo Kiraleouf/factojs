@@ -135,14 +135,14 @@ class Item {
                     }
                 }else{
                     if(this.target.posX >= this.posX+5){
-                        this.posX += this.baseMoveSpeed*(this.level/2);
+                        this.posX += this.baseMoveSpeed*(this.level/5);
                     }else if(this.target.posX < this.posX-5){
-                        this.posX -= this.baseMoveSpeed*(this.level/2);
+                        this.posX -= this.baseMoveSpeed*(this.level/5);
                     }
                     if(this.target.posY >= this.posY+5){
-                        this.posY += this.baseMoveSpeed*(this.level/2);
+                        this.posY += this.baseMoveSpeed*(this.level/5);
                     }else if(this.target.posY < this.posY-5){
-                        this.posY -= this.baseMoveSpeed*(this.level/2);
+                        this.posY -= this.baseMoveSpeed*(this.level/5);
                     }
                 }
             }
