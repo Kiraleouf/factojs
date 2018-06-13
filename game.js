@@ -60,7 +60,6 @@ function draw() {
     if(item.currentLife <= 0){
       var i = items.indexOf(item);
       if(i != -1) {
-        console.log("Remove dead item");
         items.splice(i, 1);
       }
     }
@@ -69,7 +68,6 @@ function draw() {
     if(heal.isOver()){
       var i = heals.indexOf(heal);
       if(i != -1) {
-        console.log("Remove dead heal");
         heals.splice(i, 1);
       }
     }
@@ -137,7 +135,6 @@ function computeItems(){
       if(items.length>1){
         item.target = items[Math.floor(random(items.length))]
         while(item.target.id == item.id){
-          console.log("can't focus myself search other target");
           item.target = items[Math.floor(random(items.length))]
         }
       }

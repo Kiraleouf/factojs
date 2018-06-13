@@ -117,7 +117,6 @@ class Item {
             if(this.target instanceof Heal && this.target.isOver()){
                 this.target = undefined
             }else{
-                //console.log(this.target)
                 var X = Math.abs(this.target.posX - this.posX);
                 var Y = Math.abs(this.target.posY - this.posY)
 
@@ -160,8 +159,6 @@ class Item {
         if((new Date().getTime() - this.lastHitTime) > (500 - (this.atkSpd*2))){
             if(this.target.currentLife > this.atk){
                 this.target.currentLife -= this.atk - this.target.def > 0 ? this.atk : this.atk/2 ;
-                console.log("FIGHT ! made "+ (this.atk - this.target.def > 0 ? this.atk : this.atk/2) +"dmg");
-                
                 this.lastHitTime = new Date().getTime()
             }else{
                 this.target.currentLife = 0;
