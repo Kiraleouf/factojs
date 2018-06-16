@@ -5,17 +5,41 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Language" content="fr" />
         <meta name="author" content="GGC" />
+
         <script src="p5.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="./addons/p5.dom.js"></script>
         <script src="item.js"></script>
-        <script src="game.js"></script>
         <script src="heal.js"></script>
+        <script src="graph.js"></script>
+        <script src="game.js"></script>
         <title>
         </title>
     </head>
+    <style>
+
+        .chart #red {
+            font: 10px sans-serif;
+            background-color: red;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+        .chart #blue {
+            font: 10px sans-serif;
+            background-color: blue;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+        
+    </style>
     <body>
-        <p>
-        </p>
-        <hr />
+        <div id="chart" class="chart">
+            
+        </div>
     </body>
+    
 </html>

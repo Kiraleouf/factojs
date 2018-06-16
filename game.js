@@ -1,17 +1,25 @@
-var items = new Array();
+var items=new Array();
 var heals = new Array();
 
-var mobAtSpawn = 15;
+var mobAtSpawn = 5;
 var mobOnWave = 5;
+var healOnWave = 10;
+
+var maxMobByTeam = 10;
+var maxHealOnMap = 1;
 
 //Temps de spawn des monstres en ms
-var timeToSpawnMs = 5000;
-//Temps de spawn des heals en ms
+var timeToSpawnMs = 100
 var timeToSpawnHealMs = 2000;
 var lastHealSpawnTime = new Date().getTime();
 var lastSpawnTime = new Date().getTime();
 var healHeight = 0;
 var healHeight = 0;
+var spawnMoreSmallsMobs = true;
+var maxLevel = 0;
+var currentSpeed = 2;
+
+var graph;
 
 window.onload = function(){
 }
@@ -20,50 +28,72 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1000, 600);
-  columns = floor(width/50);
-  rows = floor(height/50);
+  createCanvas(windowWidth, windowHeight);
+  var paragraphs = document.getElementsByTagName("p");
+  for (var i = 0; i < paragraphs.length; i++) {
+    var paragraph = paragraphs.item(i);
+    paragraph.style.setProperty("color", "white", null);
+  }
   rectMode(CENTER);
   frameRate(60)
   var col = color(223, 249, 251);
-
-  createHealArea()
+  //Array RED TEAM
+  items[0] = new Array();
+  //Array BLUE TEAM
+  items[1] = new Array();
   
   for(var i =0 ; i < mobAtSpawn ; i++){
-    createItem();
+    createItem(0);
+    createItem(1);
   }
+  graph = new Graph();
+  graph.init(); 
 }
 
 function draw() {
+  rectMode(CORNER);
+  getMaxLevel()
   if(items.length==1){
     //FIN DU GAME TU FE QUOI ?
   }
-  background(0,0,0)
-  //CRON TO SPAWN MONSTERS
+  background(244, 140, 66);
+  
+  fill(183, 60, 60);
+  rect(0,0, width/10,height)
+  fill(60, 107, 183);
+  rect((width/10*9),0,(width/10) ,height)
 
-  if(new Date().getTime() - lastSpawnTime > timeToSpawnMs && items.length < 20){
+  rectMode(CENTER);
+  //DRAW HEALS
+  heals.forEach(function(heal) {
+    heal.draw()
+  })
+
+  //CRON TO SPAWN MONSTERS
+  if(new Date().getTime() - lastSpawnTime > timeToSpawnMs){
     for(var i =0 ; i < mobOnWave ; i++){
-      createItem();
+      if(items[0].length < maxMobByTeam) createItem(0);
+      if(items[1].length < maxMobByTeam) createItem(1);
+      lastSpawnTime = new Date().getTime();
     }
-    lastSpawnTime = new Date().getTime();
+    //mobOnWave++;
   }
+  
 
   if(new Date().getTime() - lastHealSpawnTime > timeToSpawnHealMs && heals.length < 3){
-    heal = new Heal();
-    heal.init()
-    heal.id = randomUUID();
-    heals.push(heal);
+    
+    for(var i =0 ; i < healOnWave ; i++){
+      createHeals();
+    }
+    if(heals.length < maxHealOnMap){
+      healOnWave++;
+    }
     lastHealSpawnTime = new Date().getTime();
   }
   //CLEAR Lists
-  items.forEach(function(item) {
-    if(item.currentLife <= 0){
-      var i = items.indexOf(item);
-      if(i != -1) {
-        items.splice(i, 1);
-      }
-    }
-  })
+  clearList(0)
+  clearList(1)
+
   heals.forEach(function(heal) {
     if(heal.isOver()){
       var i = heals.indexOf(heal);
@@ -73,30 +103,29 @@ function draw() {
     }
   })
 
+
   //MOVE MONSTERS 
   if(items.length > 1 || heals.length > 1){
-    computeItems();
+    computeItems(0);
+    computeItems(1);
   }
 
   //DRAW MONSTERS
-  items.forEach(function(item) {
-    item.draw()
+  items[0].forEach(function(item) {
+    item.draw(0)
   })
 
-  //DRAW HEALS
-  heals.forEach(function(heal) {
-    heal.draw()
+  items[1].forEach(function(item) {
+    item.draw(1)
   })
 
   //DRAW LINK
-  items.forEach(function(item) {
-    item.draw()
-    item.drawLinkTarget()
+  items[0].forEach(function(item) {
+    //item.drawLinkTarget()
   })
-}
-
-function findRandomTarget(){
-  return items[random(items.length)]
+  items[1].forEach(function(item) {
+   // item.drawLinkTarget()
+  })
 }
 
 function randomUUID(){
@@ -106,38 +135,51 @@ function randomUUID(){
   });
 };
 
-function createHealArea(){
-  healWidth = width/10;
-  healHeight = height/10;
-  fill(255,0,0);
-  rect(0,0,healWidth,healHeight);
-}
-
-function createItem(){
+function createItem(team){
   item = new Item();
-  item.init()
+  var current = item.init(maxLevel,team)
   item.id = randomUUID();
-  items.push(item);
+  items[team].push(item);
+  if(current.level < maxLevel && items[team].length < maxMobByTeam){
+    for(var i=0; i< maxLevel/current.level;i++){
+      item = new Item();
+      item.initWithLevel(current.level,team)
+      item.id = randomUUID();
+      items[team].push(item);
+    }
+  }
 }
 
-
-function createHeals(){
-  item = new Item();
-  item.init()
-  item.id = randomUUID();
-  items.push(item);
-}
-
-function computeItems(){
-  items.forEach(function(item) {
-    var targetHeal = item.target instanceof Heal
-    if(item.target == undefined){
-      if(items.length>1){
-        item.target = items[Math.floor(random(items.length))]
-        while(item.target.id == item.id){
-          item.target = items[Math.floor(random(items.length))]
-        }
+function clearList(team){
+  items[team].forEach(function(item) {
+    if(item.currentLife <= 0){
+      var i = items[team].indexOf(item);
+      if(i != -1) {
+        items[team].splice(i, 1);
+        graph.addScore(team==0 ? 1 : 0)
       }
+    }
+  })
+}
+function createHeals(){
+  heal = new Heal();
+  heal.init()
+  heal.id = randomUUID();
+  heals.push(heal);
+}
+
+function computeItems(team){
+  if(team==0) target = 1;
+  else target = 0;
+  items[team].forEach(function(item) {
+    var targetHeal = item.target instanceof Heal
+    if(item.target instanceof Item){
+      if(item.target.currentLife <=0) item.target = undefined;
+    }else if(targetHeal && (item.shouldHeal==false||item.target.isOver())){
+      item.target = undefined;
+    }
+    if(item.target == undefined && items[target].length>0 && !item.shouldHeal){
+      item.target = items[target][Math.floor(random(items.length))]
     }else if (item.shouldHeal){
       if(!targetHeal){
         item.target = getRandomHeal()
@@ -146,6 +188,30 @@ function computeItems(){
     item.moveToTarget();
     item.compute();
   })
+}
+
+function getMaxLevel(){
+  items[0].forEach(item => {
+    item.setSpeed(currentSpeed)
+    if(item.level > maxLevel){
+      maxLevel = item.level;
+    }
+  });
+  items[1].forEach(item => {
+    item.setSpeed(currentSpeed)
+    if(item.level > maxLevel){
+      maxLevel = item.level;
+    }
+  });
+}
+
+function keyPressed() {
+  if(keyCode == UP_ARROW) {
+      currentSpeed += 10;
+  } else if (keyCode == DOWN_ARROW) {
+    currentSpeed -= 10;
+  }
+  return 0;
 }
 
 function getRandomHeal(){

@@ -4,12 +4,12 @@ class Heal {
         this.posX;
         this.posY;
 
-        this.width = 30;
-        this.height = 30;
+        this.width = 10;
+        this.height = 10;
 
         this.level;
 
-        this.lifeToGive = 1000;
+        this.lifeToGive = 5000;
         this.over = false;
     }
 
@@ -20,7 +20,7 @@ class Heal {
     };
 
     draw() {
-        fill(255,0,0);
+        fill(0,255,0);
         rect(this.posX, this.posY, this.width, this.height);
         fill(255,255,255);
         textSize(15+this.level);
