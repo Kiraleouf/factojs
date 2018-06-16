@@ -107,7 +107,7 @@ class Item {
         ellipse(this.posX, this.posY, 20 + this.rng, 20 + this.rng);
         fill(team == 0 ? 255 : 0, 0, team == 1 ? 255 : 0);
         stroke(0,0,0);
-        rect(this.posX, this.posY, 25, 25);
+        rect(this.posX, this.posY, 15, 15);
         strokeWeight(1);
 
         //Draw Life Bar
@@ -161,19 +161,49 @@ class Item {
                 }else{
                     var moveFactor = this.baseMoveSpeed*this.spd/25;
                     if(moveFactor*moveFactor > sqrDistance)moveFactor=sqrDistance
-                    if(this.target.posX >= this.posX+5){
-                        this.posX = this.posX + moveFactor > width ? width : this.posX + moveFactor;
-                    }else if(this.target.posX < this.posX-5){
-                        this.posX = this.posX - moveFactor <= 0 ? 0 : this.posX - moveFactor;
-                    }
-                    if(this.target.posY >= this.posY+5){
-                        this.posY = this.posY + moveFactor > height ? height : this.posY + moveFactor;
-                    }else if(this.target.posY < this.posY-5){
-                        this.posY = this.posY - moveFactor <= 0 ? 0 : this.posY - moveFactor;
-                    }
+                    this.move(moveFactor)
                 }
             }
         }
+    }
+
+    move(moveFactor){
+        var moveFactorX = Math.round(random(moveFactor))
+        var moveFactorY = moveFactor - moveFactorX;
+        if(Math.abs(this.target.posX - this.posX) < 5){
+            moveFactorX = 0;
+            moveFactorY = moveFactor;
+        }else if(Math.abs(this.target.posY - this.posY) < 5){
+            moveFactorX = moveFactor;
+            moveFactorY = 0;
+        }
+        this.moveLoop(moveFactorX, moveFactorY)
+    }
+
+    moveLoop(moveFactorX, moveFactorY){
+        this.posX = Math.round(this.posX);
+        this.posY = Math.round(this.posY);
+        for(var i = 0; i < moveFactorX;i++){
+            if(this.target.posX - this.posX > 0){
+                this.posX = this.posX + 1 > width ? width : this.posX + 1;
+                moveFactorX--;
+            }else if(this.target.posX - this.posX < 0){
+                this.posX = this.posX - 1 <= 0 ? 0 : this.posX - 1;
+                moveFactorX--;
+            }else{
+                moveFactorX =0;
+            }
+        }
+        for(var i = 0; i < moveFactorY;i++){
+            if(this.target.posY - this.posY > 0){
+                this.posY = this.posY + 1 > height ? height : this.posY + 1;
+                moveFactorY--;
+            }else{
+                this.posY = this.posY - 1 <= 0 ? 0 : this.posY - 1;
+                moveFactorY--;
+            }
+        }
+        if(moveFactorX > 0 && moveFactorY >0) this.moveLoop(moveFactorX,moveFactorY)
     }
 
     setSpeed(speed){
@@ -189,7 +219,7 @@ class Item {
     }
 
     hit(){
-        if((new Date().getTime() - this.lastHitTime) > (500 - (this.atkSpd*2*this.baseMoveSpeed))){
+        if((new Date().getTime() - this.lastHitTime) > (1000 - (this.atkSpd*this.baseMoveSpeed))){
             if(this.target.currentLife > this.atk){
                 this.target.currentLife -= this.atk - this.target.def > 0 ? this.atk : this.atk/2 ;
                 this.lastHitTime = new Date().getTime()

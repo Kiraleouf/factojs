@@ -126,6 +126,7 @@ function draw() {
   items[1].forEach(function(item) {
    // item.drawLinkTarget()
   })
+  graph.drawScore();
 }
 
 function randomUUID(){
