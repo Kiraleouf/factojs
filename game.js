@@ -24,7 +24,7 @@ window.onload = function(){
 }
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(windowWidth/2, windowHeight/2);
   columns = floor(width/blockWidth);
   rows = floor(height/blockWidth);
   frameRate(60)
@@ -32,7 +32,7 @@ function setup() {
   var col = color(223, 249, 251);
   var button = createButton('ADD ROBOT');
   button.style('background-color', col);
-  button.position(200, 100);
+  button.position(width - (button.width/2), height + 10);
   button.mousePressed(addRobot);
 }
 
@@ -42,7 +42,7 @@ function draw() {
   drawMachines();
   getItems();
   getRobots()
-  player.drawPlayer();
+  player.drawPlayer(width,height, columns, rows);
   drawScore();
 }
 
@@ -82,8 +82,11 @@ function mouseClicked() {
   //mouseX-(blockWidth/2), mouseY-(blockWidth/2),blockWidth, blockWidth
   var posToPlaceTheBlockX = (posX*blockWidth); 
   var posToPlaceTheBlockY = (posY*blockWidth); 
-  var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,5000,10,10);
-  if(!machine.present()) machines.push(machine)
+
+  if(((posToPlaceTheBlockX + blockWidth) < width) && ((posToPlaceTheBlockY + blockWidth) < height)){
+    var machine = new Machine(posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir,machines,this.blockWidth,5000,10,10);
+    if(!machine.present()) machines.push(machine)
+  } 
 }
 
 function addRobot(){

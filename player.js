@@ -1,10 +1,13 @@
 var Player = function() {
-    this.drawPlayer = function(){
+    this.drawPlayer = function(winWidth, winHeight, cols, rows){
         var posX = Math.trunc(mouseX/blockWidth);
         var posY = Math.trunc(mouseY/blockWidth);
         var posToPlaceTheBlockX = (posX*blockWidth); 
         var posToPlaceTheBlockY = (posY*blockWidth); 
-        drawPlayerObjects(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
+
+        if(((posToPlaceTheBlockX + blockWidth) < winWidth) && ((posToPlaceTheBlockY + blockWidth) < winHeight)){
+          drawPlayerObjects(posX,posY,posToPlaceTheBlockX,posToPlaceTheBlockY,currentDir)
+        }
     }
 
     function drawPlayerObjects(x,y,xDraw,yDraw,direction){
