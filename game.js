@@ -14,6 +14,11 @@ var chest = new Chest(1,1,30,blockWidth);
 var items = new Array();
 var robots = new Array();
 var machines = new Array();
+var belts = new Array();
+
+var ihmInv = new Array();
+
+var handledItem;
 
 var money = 0;
 var baseRobotUnitCost = 50;
@@ -40,6 +45,7 @@ function draw() {
   drawGrid();
   drawChest();
   drawMachines();
+  drawBelts();
   getItems();
   getRobots()
   player.drawPlayer(width,height, columns, rows);
@@ -73,6 +79,12 @@ function drawMachines(){
   for(var i=0;i<machines.length;i++){
     machines[i].drawMachineObjects(0,0,machines[i].posX,machines[i].posY,machines[i].rotation);
     machines[i].drawInputs();
+  }
+}
+
+function drawBelts(){
+  for(var i = 0; i < belts.length; i++){
+    belts[i].draw();
   }
 }
 
@@ -113,20 +125,58 @@ function drawGrid(){
 }
 
 function drawScore(){
-  fill(255, 255, 255);
+  fill(0);
   stroke(0)
-  text('MONEY :'+ this.chest.getGolds(), (width /2)-50 , 60);
+  text('MONEY: '+ this.chest.getGolds(), (width /2)-100 , height - 5);
+  
   var count=0;
   for(var i=0;i< this.robots.length;i++){
     if(this.robots[i].isActive()){
       count++;
     }
   }
-  text('ROBOTS ACTIVITY:'+ count +"/"+this.robots.length, (width /2)-50 , 100);
+
+  text('ROBOTS ACTIVITY: '+ count +" / "+this.robots.length, (width /2)-30 , height - 5);
 }
 
 function keyPressed() {
   switch (keyCode) {
+    case 49:
+      console.log("1");
+      handledItem = ihmInv[0];
+      break;
+    case 50:
+      console.log("2");
+      handledItem = ihmInv[1];
+      break;
+    case 51:
+      console.log("3");
+      handledItem = ihmInv[2];
+      break;
+    case 52:
+      console.log("4");
+      handledItem = ihmInv[3];
+      break;
+    case 53:
+      console.log("5");
+      handledItem = ihmInv[4];
+      break;
+    case 54:
+      console.log("6");
+      handledItem = ihmInv[5];
+      break;
+    case 55:
+      console.log("7");
+      handledItem = ihmInv[6];
+      break;
+    case 56:
+      console.log("8");
+      handledItem = ihmInv[7];
+      break;
+    case 57:
+      console.log("9");
+      handledItem = ihmInv[8];
+      break;
     case 82:
       currentDir+=1;
       if(currentDir>3)currentDir=0;
